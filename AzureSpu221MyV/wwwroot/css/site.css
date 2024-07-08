@@ -1,0 +1,71 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.translated
+{
+    background-color: palevioletred;
+}
+.w40 {
+    max-width: 40px;
+    max-height: 40px;
+}
+.rounded-circle {
+    border-radius: 50%;
+    max-width: 40px;
+    max-height: 40px;
+    margin-right: 20px;
+}
+.image-results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-result {
+    margin: 10px;
+    text-align: center;
+}
+
+    .image-result img {
+        max-width: 150px;
+        height: auto;
+    }
+
+.video-results {
+    display: flex;
+    flex-wrap: wrap;
+}
+.video-result a {
+    display: block;
+    margin-top: 5px;
+    color: blue;
+    text-decoration: underline;
+}
+
+.video-result {
+    margin: 10px;
+    text-align: center;
+}
+
+    .video-result video {
+        max-width: 320px;
+        height: auto;
+    }

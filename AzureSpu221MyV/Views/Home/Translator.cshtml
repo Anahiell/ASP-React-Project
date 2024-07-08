@@ -1,0 +1,93 @@
+﻿@model AzureSpu221MyV.Models.Translator.TranslatorViewModel
+@{
+    ViewData["Title"] = "Translator";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Translator.Когнитивные сервисы.</h1>
+</div>
+
+<br />
+@* @Html.DisplayFor(m => Model)
+@Model.TranslatorResponse?.items.First().translations.First().text
+@* @foreach(var pair in Model.LanguageResponse!.translation)
+{
+    <p>@pair.Key -- @pair.Value.nativeName (@pair.Value.name)</p>
+} *@ 
+<form method="post">
+    <div class="row">
+        <div class="col col-5">
+            <div class="row">
+                <select name="lang-from">
+                    @foreach (var pair in Model.LanguageResponse!.translation)
+                    {
+                        @if (pair.Key == (Model.FormModel?.LanguageFrom ?? "en"))
+                        {
+                            <option value="@pair.Key" selected>
+                                @pair.Value.nativeName
+                                @if (pair.Value.nativeName != pair.Value.name)
+                                {
+                                    @:(@pair.Value.name)
+                                }
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@pair.Key">
+                                @pair.Value.nativeName
+                                @if (pair.Value.nativeName != pair.Value.name)
+                                {
+                                    @:(@pair.Value.name)
+                                }
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="row">
+                <textarea name="original-text">@Model.FormModel?.OriginalText</textarea>
+            </div>
+        </div>
+        <div class="col col-1">
+            <button type="submit" class="btn btn-outline-info" name="go-button" value="true"><i class="bi bi-arrow-left-right"></i></button>
+        </div>
+        <div class="col col-5">
+            <div class="row">
+            <select name="lang-to">
+                @foreach (var pair in Model.LanguageResponse!.translation)
+                {
+                    @if (pair.Key == (Model.FormModel?.LanguageTo ?? "uk"))
+                    {
+                        <option value="@pair.Key" selected>
+                            @pair.Value.nativeName
+                            @if (pair.Value.nativeName != pair.Value.name)
+                            {
+                                @:(@pair.Value.name)
+                            }
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@pair.Key">
+                            @pair.Value.nativeName
+                            @if (pair.Value.nativeName != pair.Value.name)
+                            {
+                                @:(@pair.Value.name)
+                            }
+                        </option>
+                    }
+                }
+            </select>
+            <div class="row">
+                <textarea disabled>@Model.TranslatorResponse?.items.First().translations.First().text</textarea>
+            </div>
+            </<div>
+        </div>
+    </div>
+</form>
+
+<p>
+    The language to use for user interface strings. Some of the fields in the response are names of languages or names of regions. Use this parameter to define the language in which these names are returned. The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value fr to request names in French or use the value zh-Hant to request names in Chinese Traditional.
+    Names are provided in the English language when a target language isn't specified or when localization isn't available.
+</p>
+@ViewData["result"]

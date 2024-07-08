@@ -1,0 +1,22 @@
+{
+  "azure": {
+    "translator": {
+      "key": "<your-translator-key>",
+      "region": "global",
+      "endpoint": "https://api.cognitive.microsofttranslator.com/"
+    },
+    "cosmosDb": {
+      "endpointUri": "<your-endpointUri>",
+      "primaryKey": "<your-primaryKey>",
+      "databaseId": "ToDoList",
+      "containerId": "Items"
+    },
+    "search": {
+      "key": "<your-search-key>",
+      "region": "global",
+      "endpoint": "<your-endpointUri>",
+      "webPath": "/v7.0/search",
+      "imagePath": "/v7.0/images/search"
+    }
+  }
+}

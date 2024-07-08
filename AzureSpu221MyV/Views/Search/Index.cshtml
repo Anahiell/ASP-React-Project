@@ -1,0 +1,105 @@
+﻿@using System.Text.Json.Nodes
+@{
+    ViewData["Title"] = "Search";
+    JsonNode result = ViewData["result"] as JsonNode;
+    string searchType = ViewData["searchType"] as string ?? "web";
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Searching services. Bing</h1>
+</div>
+
+<form method="get">
+    <input name="searchText" value="@ViewData["searchText"]" />
+    <input type="hidden" name="searchType" value="@searchType" />
+    <button type="submit" class="btn-secondary"><i class="bi bi-search"></i> Search</button>
+</form>
+<br />
+<div>
+    <a href="?searchText=@(ViewData["searchText"] ?? "")&searchType=web" class="btn @(searchType == "web" ? "btn-primary" : "btn-secondary")">Web</a>
+    <a href="?searchText=@(ViewData["searchText"] ?? "")&searchType=image" class="btn @(searchType == "image" ? "btn-primary" : "btn-secondary")">Picture</a>
+    <a href="?searchText=@(ViewData["searchText"] ?? "")&searchType=news" class="btn @(searchType == "news" ? "btn-primary" : "btn-secondary")">News</a>
+    <a href="?searchText=@(ViewData["searchText"] ?? "")&searchType=video" class="btn @(searchType == "video" ? "btn-primary" : "btn-secondary")">Video</a>
+</div>
+
+<br />
+<br />
+@if (result != null)
+{
+    
+    <script>
+        console.log("Bing Search API Response:", "@result");
+    </script>
+}
+
+@if (result != null)
+{
+    JsonArray resultsArray = null;
+    string query = result["queryContext"]?["originalQuery"]?.ToString() ?? "неизвестный запрос";
+
+    if (searchType == "web" && result["webPages"]?["value"] is JsonArray webPagesArray)
+    {
+        resultsArray = webPagesArray;
+    }
+    else if (searchType == "image" && result["value"] is JsonArray imageArray)
+    {
+        resultsArray = imageArray;
+    }
+    else if (searchType == "news" && result["value"] is JsonArray newsArray)
+    {
+        resultsArray = newsArray;
+    }
+    else if (searchType == "video" && result["value"] is JsonArray videoArray)
+    {
+        resultsArray = videoArray;
+    }
+
+    <span>
+        Поиск <b>@query</b>
+        Найдено <i>@(resultsArray?.Count ?? 0)</i>
+    </span>
+    @if (resultsArray != null)
+    {
+        if (searchType == "web" || searchType == "news")
+        {
+            <ul>
+                @foreach (var item in resultsArray)
+                {
+                    <li>
+                        <a href="@item["url"]">@item["name"]</a>
+                        <p>@item["snippet"]</p>
+                    </li>
+                }
+            </ul>
+        }
+        else if (searchType == "image")
+        {
+            <div class="image-results">
+                @foreach (var item in resultsArray)
+                {
+                    <div class="image-result">
+                        <img src="@item["thumbnailUrl"]" alt="@item["name"]" />
+                        <p>@item["name"]</p>
+                    </div>
+                }
+            </div>
+        }
+        else if (searchType == "video")
+        {
+            <div class="video-results">
+                @foreach (var item in resultsArray.Take(5))
+                {
+                    <div class="video-result">
+                        <iframe width="560" height="315" src="@item["contentUrl"]" frameborder="0" allowfullscreen></iframe>
+                        <p>@item["name"]</p>
+                        <p>URL: <a href="@item["contentUrl"]">@item["contentUrl"]</a></p>
+                        <a href="@item["hostPageUrl"]">Посетить сайт</a>
+                    </div>
+                }
+            </div>
+
+        }
+    }
+}
+

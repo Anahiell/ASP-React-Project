@@ -1,0 +1,8 @@
+﻿@model AzureSpu221MyV.Data.User
+
+<div class="row">
+    <div class="col">@Model.Name</div>
+    <div class="col">@Model.Email</div>
+    <div class="col">@(Model.Birthdate == default ? "--" : Model.Birthdate)</div>
+    <div class="col"> <a asp-action="DeleteUser" asp-route-id="@Model.Id"><i class="bg-info bi-trash3"></i></a></div>
+</div>
